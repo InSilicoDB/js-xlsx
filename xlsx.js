@@ -11619,6 +11619,29 @@ function sheet_to_formulae(sheet) {
 	return cmds;
 }
 
+function sheet_to_array(sheet) {
+	var out = [], txt = "", qreg = /"/g;
+	if(sheet == null || sheet["!ref"] == null) return "";
+	var r = safe_decode_range(sheet["!ref"]);
+	var row = [], rr = "", cols = [];
+	var i = 0, val;
+	var R = 0, C = 0;
+	for(C = r.s.c; C <= r.e.c; ++C) cols[C] = encode_col(C);
+	for(R = r.s.r; R <= r.e.r; ++R) {
+		row = [];
+		rr = encode_row(R);
+		for(C = r.s.c; C <= r.e.c; ++C) {
+			val = sheet[cols[C] + rr];
+			txt = val !== undefined ? ''+format_cell(val) : "";
+			for(i = 0; i !== txt.length; ++i) if((txt.charCodeAt(i)) === 34) {
+				txt = "\"" + txt.replace(qreg, '""') + "\""; break; }
+			row.push(txt);
+		}
+		out.push(row);
+	}
+	return out;
+}
+
 var utils = {
 	encode_col: encode_col,
 	encode_row: encode_row,
