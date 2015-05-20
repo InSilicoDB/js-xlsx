@@ -11619,7 +11619,7 @@ function sheet_to_formulae(sheet) {
 	return cmds;
 }
 
-function sheet_to_array(sheet) {
+function sheet_to_matrix(sheet) {
 	var out = [], txt = "", qreg = /"/g;
 	if(sheet == null || sheet["!ref"] == null) return "";
 	var r = safe_decode_range(sheet["!ref"]);
@@ -11660,7 +11660,7 @@ var utils = {
 	sheet_to_csv: sheet_to_csv,
 	sheet_to_json: sheet_to_json,
 	sheet_to_formulae: sheet_to_formulae,
-	sheet_to_array: sheet_to_array,
+	sheet_to_matrix: sheet_to_matrix,
 	sheet_to_row_object_array: sheet_to_row_object_array
 };
 XLSX.parse_xlscfb = parse_xlscfb;
